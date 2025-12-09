@@ -1,0 +1,19 @@
+{
+  "login": {
+    "title": "Iniciar Sesión",
+    "subtitle": "Inicia sesión en tu cuenta",
+    "email": "Email",
+    "emailPlaceholder": "Ingrese su email",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Ingrese su contraseña",
+    "submitButton": "Iniciar Sesión",
+    "signingIn": "Iniciando sesión...",
+    "registerLink": "¿No tienes cuenta? Registrarse",
+    "errors": {
+      "emailRequired": "El email es requerido",
+      "emailInvalid": "Email inválido",
+      "passwordRequired": "La contraseña es requerida",
+      "loginError": "Error al iniciar sesión"
+    }
+  }
+}

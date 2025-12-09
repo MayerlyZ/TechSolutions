@@ -1,0 +1,148 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #FFFAEF;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #304F40;
+  margin: 0 0 1rem 0;
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+.formContainer {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #304F40;
+  font-size: 1rem;
+}
+
+.input,
+.textarea,
+.select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #E1D2BB;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  transition: all 300ms ease;
+  color: #333;
+  background: white;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: #304F40;
+  box-shadow: 0 0 0 3px rgba(48, 79, 64, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.successMessage {
+  background: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.errorMessage {
+  background: #f8d7da;
+  color: #1a68ce;
+  border-left: 4px solid #f5c6cb;
+}
+
+.submitBtn {
+  padding: 1rem;
+  background: #1a68ce;
+  color: #FFFAEF;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 300ms ease;
+  margin-top: 1rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #1a68ce;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(111, 26, 7, 0.3);
+}
+
+.submitBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .formContainer {
+    padding: 1.5rem;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
