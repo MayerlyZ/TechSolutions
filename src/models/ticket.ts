@@ -12,10 +12,14 @@ const TicketSchema = new Schema(
       required: [true, 'La descripción es requerida'],
       trim: true,
     },
+    category: {
+      type: String,
+      default: 'general',
+      enum: ['general', 'hardware', 'software', 'network', 'other'],
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'El creador del ticket es requerido'],
     },
     assignedTo: {
       type: Schema.Types.ObjectId,
@@ -30,6 +34,22 @@ const TicketSchema = new Schema(
       type: String,
       enum: ['low', 'medium', 'high'],
       default: 'low',
+    },
+    isPublic: {
+      type: Boolean,
+      default: false,
+    },
+    clientName: {
+      type: String,
+    },
+    clientEmail: {
+      type: String,
+    },
+    clientPhone: {
+      type: String,
+    },
+    createdByEmail: {
+      type: String,
     },
   },
   {

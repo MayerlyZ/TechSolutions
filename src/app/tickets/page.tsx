@@ -59,9 +59,6 @@ export default function commentsPage() {
       }
     };
 
-    // Cargar favoritos del localStorage
-    const saveFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    setFavorites(saveFavorites.map((fav: any) => fav.id));
 
     checkSession();
     fetchcomments();
@@ -78,7 +75,7 @@ export default function commentsPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al cargar comments');
+        throw new Error(data.error || 'Error al cargar comentarios');
       }
 
       setcomments(data.data || []);
@@ -147,7 +144,7 @@ export default function commentsPage() {
         prioridad: 'Media',
       });
 
-      // Recargar comments después de 1 segundo
+      // Recargar comentarios después de 1 segundo
       setTimeout(() => {
         fetchcomments();
         setShowModal(false);
@@ -185,8 +182,6 @@ export default function commentsPage() {
       });
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success(`${comment.name} agregado al carrito`);
   };
 
   

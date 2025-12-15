@@ -75,10 +75,9 @@ export default function HorizontalNav() {
   }, []);
 
   const clientLinks = [
-    { href: '/comments', label: 'Crear Nuevo Ticket' },
-    { href: '/tickets', label: 'Mis Tickets' },,
+    { href: '/new-ticket', label: 'Crear Nuevo Ticket' },
+    { href: '/my-tickets', label: 'Mis Tickets' },
     { href: '/contacto', label: 'Hablar con soporte' },
-    
   ];
 
   const adminLinks = [

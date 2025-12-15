@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/app/lib/mongoose';
-import Order from '@/models/comment';
+import Ticket from '@/models/ticket';
+import { auth } from '../../../../../auth';
 import { ObjectId } from 'mongodb';
 
-// GET - Obtener una orden específica por ID
+// GET - Obtener un ticket específico
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -16,21 +17,21 @@ export async function GET(
       return NextResponse.json(
         {
           success: false,
-          error: 'ID de orden inválido',
+          error: 'ID de ticket inválido',
         },
         { status: 400 }
       );
     }
 
-    const order = await Order.findById(id)
-      .populate('userId', 'name email')
-      .populate('items.commentId', 'name price');
+    const ticket = await Ticket.findById(id)
+      .populate('createdBy', 'name email')
+      .populate('assignedTo', 'name email');
 
-    if (!order) {
+    if (!ticket) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Orden no encontrada',
+          error: 'Ticket no encontrado',
         },
         { status: 404 }
       );
@@ -39,7 +40,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        data: order,
+        data: ticket,
       },
       { status: 200 }
     );
@@ -54,7 +55,7 @@ export async function GET(
   }
 }
 
-// PUT - Actualizar estado de una orden
+// PUT - Actualizar un ticket (solo admin)
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -67,29 +68,55 @@ export async function PUT(
       return NextResponse.json(
         {
           success: false,
-          error: 'ID de orden inválido',
+          error: 'ID de ticket inválido',
         },
         { status: 400 }
       );
     }
 
-    const body = await request.json();
+    const session = await auth();
 
-    const order = await Order.findByIdAndUpdate(
-      id,
-      {
-        status: body.status,
-        paymentStatus: body.paymentStatus,
-        notes: body.notes,
-      },
-      { new: true, runValidators: true }
-    );
-
-    if (!order) {
+    // Solo admin puede actualizar tickets
+    if (!session?.user?.email || (session.user as any).role !== 'admin') {
       return NextResponse.json(
         {
           success: false,
-          error: 'Orden no encontrada',
+          error: 'No tienes permiso para actualizar tickets',
+        },
+        { status: 403 }
+      );
+    }
+
+    const body = await request.json();
+
+    const allowedUpdates = [
+      'status',
+      'priority',
+      'assignedTo',
+      'description',
+      'title',
+      'category',
+    ];
+
+    const updates: any = {};
+    Object.keys(body).forEach((key) => {
+      if (allowedUpdates.includes(key)) {
+        updates[key] = body[key];
+      }
+    });
+
+    const ticket = await Ticket.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    })
+      .populate('createdBy', 'name email')
+      .populate('assignedTo', 'name email');
+
+    if (!ticket) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Ticket no encontrado',
         },
         { status: 404 }
       );
@@ -98,8 +125,8 @@ export async function PUT(
     return NextResponse.json(
       {
         success: true,
-        message: 'Orden actualizada exitosamente',
-        data: order,
+        message: 'Ticket actualizado exitosamente',
+        data: ticket,
       },
       { status: 200 }
     );
@@ -109,12 +136,12 @@ export async function PUT(
         success: false,
         error: error.message,
       },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
 
-// DELETE - Cancelar una orden (soft delete)
+// DELETE - Eliminar un ticket (solo admin)
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -127,23 +154,31 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          error: 'ID de orden inválido',
+          error: 'ID de ticket inválido',
         },
         { status: 400 }
       );
     }
 
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { status: 'cancelled' },
-      { new: true }
-    );
+    const session = await auth();
 
-    if (!order) {
+    if (!session?.user?.email || (session.user as any).role !== 'admin') {
       return NextResponse.json(
         {
           success: false,
-          error: 'Orden no encontrada',
+          error: 'No tienes permiso para eliminar tickets',
+        },
+        { status: 403 }
+      );
+    }
+
+    const ticket = await Ticket.findByIdAndDelete(id);
+
+    if (!ticket) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Ticket no encontrado',
         },
         { status: 404 }
       );
@@ -152,8 +187,7 @@ export async function DELETE(
     return NextResponse.json(
       {
         success: true,
-        message: 'Orden cancelada exitosamente',
-        data: order,
+        message: 'Ticket eliminado exitosamente',
       },
       { status: 200 }
     );

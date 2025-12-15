@@ -4,12 +4,11 @@ import UserModel from '../../../models/User';
 import { User } from './definitions'; 
 import mongoose from 'mongoose'; 
 
-// Define an interface for the object returned by .lean()
 interface MongooseLeanUser {
   _id: mongoose.Types.ObjectId;
   name: string;
   email: string;
-  password?: string; // Password might not be selected by default
+  password?: string; 
 }
 
 export async function getUser(email: string): Promise<User | undefined> {  try {

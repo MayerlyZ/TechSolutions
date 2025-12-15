@@ -57,7 +57,7 @@ export default function DashboardPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al crear el commento');
+        throw new Error(data.error || 'Error al crear el commentario');
       }
 
       setMessage({

@@ -23,7 +23,7 @@ async function getUser(email: string): Promise<User | undefined> {
 
         const user = await UserModel.findOne({ email: email })
           .select('+password')
-          .lean<MongooseLeanUser>(); // Explicitly cast to MongooseLeanUser
+          .lean<MongooseLeanUser>(); 
         if (!user) {
           return undefined;
         }

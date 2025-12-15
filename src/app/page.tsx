@@ -123,6 +123,18 @@ export default function Home() {
           </div>
         )}
 
+        {/* Logo */}
+        <div className="mb-8">
+          <Image
+            src="/img/logo.png"
+            alt="TechSolutions Logo"
+            width={150}
+            height={150}
+            priority
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+
         <h1 className="text-6xl md:text-7xl font-playfair mb-4">La solucion que necesitas  </h1>
         <p className="text-lg mb-6"> A un solo click</p>
         <div className="flex flex-col items-center gap-3 mt-8 w-full justify-center">
@@ -144,6 +156,20 @@ export default function Home() {
             style={{background:' rgba(78, 226, 219, 0.8)', color:'#FFFAEF', borderRadius:'30px', width:'165px', height:'40px', margin:'5px' , border:'none', fontFamily:'font-playfair', fontSize:'1.2rem', cursor: (loading || !email) ? 'not-allowed' : 'pointer', opacity: (loading || !email) ? 0.6 : 1}}
           >
             {loading ? 'Enviando...' : 'Contactame'}
+          </button>
+          <button 
+            onClick={() => router.push('/new-ticket')}
+            style={{background:'rgba(48, 79, 64, 0.9)', color:'#FFFAEF', borderRadius:'30px', width:'200px', height:'40px', margin:'5px', border:'none', fontFamily:'font-playfair', fontSize:'1.2rem', cursor: 'pointer', transition: 'all 0.3s ease'}}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(48, 79, 64, 1)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(48, 79, 64, 0.9)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            Crear nuevo ticket
           </button>
         </div>
         <div className="flex gap-6 justify-center mt-6">

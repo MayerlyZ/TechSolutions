@@ -69,7 +69,6 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* Statistics Section */}
       <div className={styles.statsGrid}>
         <div className={`${styles.statCard} ${styles.yellow}`}>
           <div className={styles.statLabel}>Total comments</div>

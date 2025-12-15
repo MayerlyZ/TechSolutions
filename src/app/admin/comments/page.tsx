@@ -7,9 +7,9 @@ import styles from '@/app/components/admin/admin.module.css';
 interface Comment {
   _id: string;
   userId: string;
-  commentId: string; // Assuming comments are associated with comments
-  text: string; // The actual comment content
-  status: string; // e.g., 'pending', 'approved', 'rejected'
+  commentId: string; 
+  text: string; 
+  status: string;
   createdAt: string;
 }
 
@@ -24,11 +24,11 @@ export default function AdminCommentsPage() {
   const fetchComments = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/comments'); // Changed API endpoint
+      const response = await fetch('/api/comments'); 
       const data = await response.json();
       setComments(data.data || []);
     } catch (error) {
-      toast.error('Error al cargar comentarios'); // Updated error message
+      toast.error('Error al cargar comentarios'); 
     } finally {
       setLoading(false);
     }
@@ -36,17 +36,17 @@ export default function AdminCommentsPage() {
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
-      const response = await fetch(`/api/comments/${id}`, { // Changed API endpoint
+      const response = await fetch(`/api/comments/${id}`, { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
 
       if (!response.ok) {
-        throw new Error('Error al actualizar comentario'); // Updated error message
+        throw new Error('Error al actualizar comentario'); 
       }
 
-      toast.success('Comentario actualizado'); // Updated success message
+      toast.success('Comentario actualizado'); 
       fetchComments(); // Refetch comments after update
     } catch (error: any) {
       toast.error(error.message);
@@ -55,24 +55,24 @@ export default function AdminCommentsPage() {
 
   return (
     <div className={styles.adminContainer}>
-      <h1 className={styles.adminTitle}>Gestión de Comentarios</h1> {/* Updated title */}
+      <h1 className={styles.adminTitle}>Gestión de Comentarios</h1> 
 
       {loading ? (
         <p>Cargando...</p>
       ) : comments.length === 0 ? (
         <div className={styles.emptyState}>
           <p className={styles.emptyStateIcon}>—</p>
-          <p>No hay comentarios disponibles</p> {/* Updated empty state message */}
+          <p>No hay comentarios disponibles</p> 
         </div>
       ) : (
         <div className={styles.tableContainer}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>ID Comentario</th> {/* Updated header */}
+                <th>ID Comentario</th> 
                 <th>ID Usuario</th>
                 <th>ID commento</th>
-                <th>Comentario</th> {/* Updated header */}
+                <th>Comentario</th> 
                 <th>Estado</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -84,7 +84,7 @@ export default function AdminCommentsPage() {
                   <td>{comment._id.slice(0, 8)}...</td>
                   <td>{comment.userId.slice(0, 8)}...</td>
                   <td>{comment.commentId.slice(0, 8)}...</td>
-                  <td>{comment.text.slice(0, 50)}...</td> {/* Displaying comment text, truncated */}
+                  <td>{comment.text.slice(0, 50)}...</td> 
                   <td>
                     <select
                       value={comment.status}
@@ -95,7 +95,7 @@ export default function AdminCommentsPage() {
                         border: '1px solid #ddd',
                       }}
                     >
-                      <option value="pending">Pendiente</option> {/* Updated status options */}
+                      <option value="pending">Pendiente</option> 
                       <option value="approved">Aprobado</option>
                       <option value="rejected">Rechazado</option>
                     </select>
@@ -104,7 +104,7 @@ export default function AdminCommentsPage() {
                   <td>
                     <button
                       className={styles.editBtn}
-                      onClick={() => alert('Detalles del Comentario: ' + comment._id)} // Updated alert message
+                      onClick={() => alert('Detalles del Comentario: ' + comment._id)} 
                     >
                       Ver
                     </button>
